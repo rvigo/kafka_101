@@ -1,9 +1,7 @@
-package com.kafka.lesson_1.producer;
+package kafka.producer;
 
-import org.apache.kafka.clients.producer.Callback;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;
-import org.apache.kafka.clients.producer.RecordMetadata;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,22 +38,20 @@ public class ProducerDemoWithKeys {
             logger.info("key: " + key);
 
             //send data
-            producer.send(record, new Callback() {
-                public void onCompletion(RecordMetadata recordMetadata, Exception e) {
+            producer.send(record, (recordMetadata, e) -> {
 
-                    //execute every time a record is successfully sent or an exception is thrown
-                    if (e == null) {
+                //execute every time a record is successfully sent or an exception is thrown
+                if (e == null) {
 
-                        //the record was successfully sent
-                        logger.info("Received new metadata.\n" +
-                                "Topic: " + recordMetadata.topic() + "\n" +
-                                "Partition: " + recordMetadata.partition() + "\n" +
-                                "Offset: " + recordMetadata.offset() + "\n" +
-                                "Timestamp: " + recordMetadata.timestamp());
+                    //the record was successfully sent
+                    logger.info("Received new metadata.\n" +
+                            "Topic: " + recordMetadata.topic() + "\n" +
+                            "Partition: " + recordMetadata.partition() + "\n" +
+                            "Offset: " + recordMetadata.offset() + "\n" +
+                            "Timestamp: " + recordMetadata.timestamp());
 
-                    } else {
-                        logger.error("Error while producing", e);
-                    }
+                } else {
+                    logger.error("Error while producing", e);
                 }
             }).get();
         }

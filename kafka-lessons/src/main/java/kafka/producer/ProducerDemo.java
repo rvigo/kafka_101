@@ -1,4 +1,4 @@
-package com.kafka.lesson_1.producer;
+package kafka.producer;
 
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.clients.producer.ProducerRecord;

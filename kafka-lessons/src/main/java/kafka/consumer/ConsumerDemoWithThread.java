@@ -1,6 +1,5 @@
-package com.kafka.lesson_1.consumer;
+package kafka.consumer;
 
-import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
@@ -14,6 +13,7 @@ import java.util.Properties;
 import java.util.concurrent.CountDownLatch;
 
 import static java.time.Duration.ofMillis;
+import static org.apache.kafka.clients.consumer.ConsumerConfig.*;
 
 public class ConsumerDemoWithThread {
 
@@ -74,12 +74,12 @@ public class ConsumerDemoWithThread {
 
             Properties properties = new Properties();
 
-            properties.setProperty(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
-            properties.setProperty(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
-            properties.setProperty(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+            properties.setProperty(BOOTSTRAP_SERVERS_CONFIG, bootstrapServer);
+            properties.setProperty(KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
+            properties.setProperty(VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
 
-            properties.setProperty(ConsumerConfig.GROUP_ID_CONFIG, groupId);
-            properties.setProperty(ConsumerConfig.AUTO_OFFSET_RESET_CONFIG, "earliest");
+            properties.setProperty(GROUP_ID_CONFIG, groupId);
+            properties.setProperty(AUTO_OFFSET_RESET_CONFIG, "earliest");
 
             consumer = new KafkaConsumer<>(properties);
             consumer.subscribe(Arrays.asList(topic));
